@@ -5,4 +5,4 @@ order: 0
 
 # 画布笔刷工具
 
-<code src='./CanvasTools/index.tsx' inline></code>
+<code src='../../src/CanvasTools' inline></code>

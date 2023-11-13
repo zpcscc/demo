@@ -1,8 +1,0 @@
-node_modules
-dist
-docs-dist
-.eslintcache
-.dumi/tmp
-.dumi/tmp-test
-.dumi/tmp-production
-.DS_Store

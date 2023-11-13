@@ -7,4 +7,4 @@ order: 1
 
 用于在空间中展示各节点之间的关系
 
-<code src='./ThreeLayerGraph.tsx' inline></code>
+<code src='../../src/ThreeLayerGraph' inline></code>
