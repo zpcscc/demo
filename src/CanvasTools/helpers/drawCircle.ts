@@ -10,7 +10,7 @@ const drawCircle = (canvas: fabric.Canvas, opt?: fabric.ICircleOptions) => {
     top: 10,
     left: 100,
     radius: 40,
-    fill: '#66ccff',
+    fill: '#66ccff'
   };
   // 构建圆
   const circle = new fabric.Circle({ ...defaultCircleOpt, ...opt });

@@ -3,9 +3,9 @@ import { type FC, type MouseEvent } from 'react';
 import type { MenuDataType } from '../type';
 import { MenuItemWrapper } from './Styled';
 
-interface MenuItemProps {
+type MenuItemProps = {
   menuData: MenuDataType;
-}
+};
 
 // 单个菜单项
 const MenuItem: FC<MenuItemProps> = ({ menuData }) => {

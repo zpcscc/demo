@@ -8,7 +8,7 @@
 export const calculationPosition = (
   left: number,
   top: number,
-  domHeight?: number,
+  domHeight?: number
 ): { left: number; top: number } => {
   if (!left || !top) return { left, top };
   const newPosition = { left, top };

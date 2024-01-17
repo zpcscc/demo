@@ -11,7 +11,7 @@ const drawTriangle = (canvas: fabric.Canvas, opt?: fabric.ITriangleOptions) => {
     left: 350,
     width: 60,
     height: 80,
-    fill: '#66ccff',
+    fill: '#66ccff'
   };
   // 构建三角形
   const triangle = new fabric.Triangle({ ...defaultTriangleOpt, ...opt });

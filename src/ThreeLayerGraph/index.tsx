@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable no-eval */
 import $ from 'jquery';
 import { useEffect, type FC } from 'react';
@@ -7,12 +8,7 @@ import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
-
-interface PointType {
-  x: number;
-  y: number;
-  z: number;
-}
+import type { PanelOptType, PointType } from './type';
 
 // 三层关系图谱
 const ThreeLayerGraph: FC = () => {
@@ -53,7 +49,7 @@ const ThreeLayerGraph: FC = () => {
   };
 
   // 创建页面内的子元素
-  const createElement = (z: string, id: string) => {
+  const createElement = (z: number, id: string) => {
     const element = document.createElement('div');
     element.className = 'node';
     element.style.width = '10px';
@@ -62,14 +58,14 @@ const ThreeLayerGraph: FC = () => {
     element.style.borderRadius = '50%';
     element.style.margin = '10px auto';
     // 自定义数据，表示所在平面z轴的数据
-    element.dataset.z = z;
+    element.dataset.z = String(z);
     // 节点id
     element.dataset.id = id;
     return element;
   };
 
   // 创建一个平面
-  const createPlane = ({ position, background, id }) => {
+  const createPlane = ({ position, background, id }: PanelOptType) => {
     // 新建平面容器
     const element = document.createElement('div');
     // 容器内的子平面。为了更好的自定义样式，避免收到平面容器样式的影响；
@@ -81,7 +77,7 @@ const ThreeLayerGraph: FC = () => {
     element.style.background = background;
     element.style.border = '10px #66ccff solid';
     // 平面id
-    element.dataset.id = id;
+    element.dataset.id = String(id);
     elementChildren.style.width = '100%';
     elementChildren.style.height = '100%';
     elementChildren.style.display = 'grid';
@@ -249,7 +245,7 @@ const ThreeLayerGraph: FC = () => {
     renderer.domElement.style.top = '50%';
     renderer.domElement.style.left = '50%';
     renderer.domElement.style.transform = 'translate(-50%, -50%)';
-    document.querySelector('#container')?.append(renderer.domElement);
+    document.querySelector('#container')?.append(renderer.domElement as Node);
     controls = new TrackballControls(camera, renderer.domElement);
 
     // 初始化连接线用到的渲染亲
@@ -359,7 +355,15 @@ const ThreeLayerGraph: FC = () => {
   });
 
   return (
-    <div id='container' style={{ position: 'relative', overflow: 'hidden', height: '800px' }} />
+    <div
+      id='container'
+      style={{
+        position: 'relative',
+        overflow: 'hidden',
+        height: '400px',
+        border: '1px solid #ccc'
+      }}
+    />
   );
 };
 

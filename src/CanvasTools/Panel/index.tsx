@@ -2,11 +2,11 @@ import { Col, ColorPicker, Divider, InputNumber, Row, Space, Switch } from 'antd
 import { type FC } from 'react';
 import type { PanelOptType } from '../type';
 
-export interface PanelProps {
+export type PanelProps = {
   opt: PanelOptType;
   onOptChange: (fieldType: keyof PanelOptType, opt: PanelOptType) => void;
   type?: 'global' | 'local';
-}
+};
 
 // 画布面板
 const Panel: FC<PanelProps> = (props) => {
