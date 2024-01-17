@@ -1,23 +1,23 @@
-export interface DataType {
+export type DataType = {
   categoryData: (string | number)[];
   values: (string | number)[][];
-}
+};
 
-export interface RectType {
+export type RectType = {
   width: number;
   height: number;
   offsetWidth: number;
   offsetHeight: number;
   top: number;
   left: number;
-}
+};
 
-export interface PosType {
+export type PosType = {
   x: number;
   y: number;
-}
+};
 
-export interface ArrowOptType {
+export type ArrowOptType = {
   ctx: CanvasRenderingContext2D;
   startPos: PosType;
   endPos: PosType;
@@ -25,15 +25,13 @@ export interface ArrowOptType {
   headlen?: number;
   width?: number;
   color?: string;
-}
+};
 
-export interface PanelOptType {
+export type PanelOptType = {
   color?: string;
   backgroundColor?: string;
   width?: number;
   showArrow?: boolean;
   showBackground?: boolean;
   isDrawingMode?: boolean;
-}
-
-export type AnyObject = Record<string, any>;
+};

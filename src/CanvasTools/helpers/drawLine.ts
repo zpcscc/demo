@@ -10,10 +10,10 @@ const drawLine = (canvas: fabric.Canvas, points?: number[], opt?: fabric.ILineOp
     450,
     10, // 起始点坐标
     500,
-    100, // 结束点坐标
+    100 // 结束点坐标
   ];
   const defaultLineOpt: fabric.ILineOptions = {
-    stroke: '#66ccff',
+    stroke: '#66ccff'
   };
   // 构建线
   const line = new fabric.Line(points || defaultPoints, { ...defaultLineOpt, ...opt });

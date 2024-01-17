@@ -1,16 +1,16 @@
 import { type FC } from 'react';
-import { defaultMenuData } from './defaultMenuData';
 import MenuItem from './MenuItem';
 import { MenuWrapper } from './Styled';
+import { defaultMenuData } from './defaultMenuData';
 import type { MenuDataType } from './type';
 import { calculationPosition } from './utils';
 
-interface ContextMenuProps {
+type ContextMenuProps = {
   open: boolean;
   // 菜单面板的定位
   position?: { left: number; top: number };
   menuData?: MenuDataType[];
-}
+};
 
 // 菜单
 const ContextMenu: FC<ContextMenuProps> = (props) => {

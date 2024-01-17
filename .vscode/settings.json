@@ -8,11 +8,15 @@
     "easings",
     "epub",
     "evented",
+    "firasans",
+    "GLTF",
     "headlen",
+    "lerp",
     "linewidth",
     "nprogress",
     "packagejson",
     "prismjs",
-    "stylelint"
+    "stylelint",
+    "stylex"
   ]
 }

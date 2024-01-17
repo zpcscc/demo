@@ -11,7 +11,7 @@ const drawRect = (canvas: fabric.Canvas, opt?: fabric.IRectOptions) => {
     left: 10,
     width: 60,
     height: 60,
-    fill: '#66ccff',
+    fill: '#66ccff'
   };
   // 构建矩形
   const rect = new fabric.Rect({ ...defaultRectOpt, ...opt });

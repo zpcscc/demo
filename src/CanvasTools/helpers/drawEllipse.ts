@@ -11,7 +11,7 @@ const drawEllipse = (canvas: fabric.Canvas, opt?: fabric.IEllipseOptions) => {
     left: 200,
     rx: 70,
     ry: 30,
-    fill: '#66ccff',
+    fill: '#66ccff'
   };
   // 构建椭圆
   const ellipse = new fabric.Ellipse({ ...defaultEllipseOpt, ...opt });
