@@ -1,12 +1,12 @@
-import { fabric } from 'fabric';
+import { Triangle, type Canvas, type FabricObjectProps, type TOptions } from 'fabric';
 
 /**
  * @name 画三角形
  * @param canvas fabric的canvas对象
  * @param opt fabric的triangle配置
  */
-const drawTriangle = (canvas: fabric.Canvas, opt?: fabric.ITriangleOptions) => {
-  const defaultTriangleOpt: fabric.ITriangleOptions = {
+const drawTriangle = (canvas: Canvas, opt?: TOptions<FabricObjectProps>) => {
+  const defaultTriangleOpt: TOptions<FabricObjectProps> = {
     top: 10,
     left: 350,
     width: 60,
@@ -14,7 +14,7 @@ const drawTriangle = (canvas: fabric.Canvas, opt?: fabric.ITriangleOptions) => {
     fill: '#66ccff'
   };
   // 构建三角形
-  const triangle = new fabric.Triangle({ ...defaultTriangleOpt, ...opt });
+  const triangle = new Triangle({ ...defaultTriangleOpt, ...opt });
   // 将三角形添加到画布中
   canvas.add(triangle);
 };

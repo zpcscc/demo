@@ -1,8 +1,8 @@
 import { useLatest } from 'ahooks';
 import { Modal } from 'antd';
-import { fabric } from 'fabric';
+import { Canvas, PencilBrush, type FabricObject } from 'fabric';
 import { useEffect, useRef, useState, type FC } from 'react';
-import type { Any, AnyObject } from 'src/type';
+import type { AnyObject } from 'src/type';
 import ContextMenu from './ContextMenu';
 import type { MenuDataType } from './ContextMenu/type';
 import Panel from './Panel';
@@ -13,7 +13,7 @@ import type { PanelOptType } from './type';
 // 画布工具
 const CanvasTools: FC = () => {
   const canvasEl = useRef<HTMLCanvasElement>(null);
-  const canvas = useRef<fabric.Canvas | null>(null);
+  const canvas = useRef<Canvas | null>(null);
   const target = useRef<AnyObject | null>(null);
   const clipboard = useRef<AnyObject | null>(null);
   const defaultOpt = {
@@ -52,12 +52,12 @@ const CanvasTools: FC = () => {
           if (clonedObj.type === 'activeSelection') {
             // 活动选择需要一个对画布的引用
             clonedObj.canvas = canvas.current;
-            clonedObj.forEachObject((obj: fabric.Object) => {
+            clonedObj.forEachObject((obj: FabricObject) => {
               canvas.current?.add(obj);
             });
             clonedObj.setCoords();
           } else {
-            canvas.current?.add(clonedObj as fabric.Object);
+            canvas.current?.add(clonedObj as FabricObject);
           }
           clipboard.current.top += 10;
           clipboard.current.left += 10;
@@ -73,7 +73,7 @@ const CanvasTools: FC = () => {
       onClick: () => {
         setOpen(false);
         if (target.current) {
-          target.current.clone((cloned: Any) => {
+          target.current.clone((cloned: FabricObject) => {
             clipboard.current = cloned;
           });
         }
@@ -85,7 +85,7 @@ const CanvasTools: FC = () => {
       onClick: () => {
         setOpen(false);
         if (target.current) {
-          canvas.current?.remove?.(target.current as fabric.Object);
+          canvas.current?.remove?.(target.current as FabricObject);
         }
         target.current = null;
       }
@@ -118,24 +118,24 @@ const CanvasTools: FC = () => {
   ];
 
   // 初始化自由绘制笔刷工具
-  const initFreeDrawingBrush = (canvas: fabric.Canvas) => {
+  const initFreeDrawingBrush = (canvas: Canvas) => {
     // 将画布的画笔设置成铅笔
-    canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+    canvas.freeDrawingBrush = new PencilBrush(canvas);
     canvas.freeDrawingBrush.color = defaultOpt.color;
     canvas.freeDrawingBrush.width = defaultOpt.width;
     // 拐角平滑度
-    canvas.freeDrawingBrush.decimate = 5;
+    // canvas.freeDrawingBrush.decimate = 5;
   };
 
-  const updateCanvasContext = (canvas: fabric.Canvas) => {
+  const updateCanvasContext = (canvas: Canvas) => {
     if (!canvas) return;
     initFreeDrawingBrush(canvas);
   };
 
   // 绑定相关事件
-  const bindEvent = (canvas: fabric.Canvas) => {
+  const bindEvent = (canvas: Canvas) => {
     // 鼠标按下时
-    canvas.on('mouse:down', (opt) => {
+    canvas.on('mouse:down', (opt: AnyObject) => {
       const { button, e } = opt;
       // 在元素上右键
       if (button === 3) {
@@ -174,12 +174,12 @@ const CanvasTools: FC = () => {
     if (!canvas.current) return;
     switch (type) {
       case 'isDrawingMode': {
-        canvas.current.isDrawingMode = opt.isDrawingMode;
+        canvas.current.isDrawingMode = opt.isDrawingMode ?? false;
         break;
       }
       case 'color':
       case 'width': {
-        (canvas.current.freeDrawingBrush as Any)[type] = opt[type];
+        (canvas.current.freeDrawingBrush as AnyObject)[type] = opt[type];
         break;
       }
     }
@@ -232,8 +232,8 @@ const CanvasTools: FC = () => {
     canvas.current.renderAll();
   };
   useEffect(() => {
-    const containerDom: HTMLElement = document.querySelector('#container') as HTMLElement;
-    if (containerDom) {
+    const containerDom: HTMLElement | null = document.querySelector('#container');
+    if (containerDom && canvasEl.current) {
       const { offsetWidth, offsetHeight } = containerDom;
       const options = {
         width: offsetWidth,
@@ -242,7 +242,7 @@ const CanvasTools: FC = () => {
         fireRightClick: true, // 启用右键，button的数字为3
         stopContextMenu: true // 禁止默认右键菜单
       };
-      canvas.current = new fabric.Canvas(canvasEl.current, options);
+      canvas.current = new Canvas(canvasEl.current, options);
       updateCanvasContext(canvas.current);
       bindEvent(canvas.current);
     }
