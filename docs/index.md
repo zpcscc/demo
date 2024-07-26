@@ -5,7 +5,7 @@ hero:
   description: demo案例
   actions:
     - text: demo
-      link: /demo
+      link: /demo/canvas-tools
     - text: 博客
       link: https://zpcscc.top/
 ---

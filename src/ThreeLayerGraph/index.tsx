@@ -190,8 +190,10 @@ const ThreeLayerGraph: FC = () => {
     sceneLine.add(line);
 
     // 画箭头
-    const startPos = points.at(-2) as THREE.Vector3;
-    const endPos = points.at(-1) as THREE.Vector3;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const startPos = points.at(-2)!;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const endPos = points.at(-1)!;
     const direction = new THREE.Vector3(
       endPos.x - startPos.x,
       endPos.y - startPos.y,
@@ -360,7 +362,7 @@ const ThreeLayerGraph: FC = () => {
       style={{
         position: 'relative',
         overflow: 'hidden',
-        height: '400px',
+        height: '500px',
         border: '1px solid #ccc'
       }}
     />
