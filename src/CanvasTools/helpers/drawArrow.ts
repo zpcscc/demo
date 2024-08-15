@@ -1,7 +1,5 @@
 import { Group, Line, type Canvas, type FabricObjectProps, type TOptions } from 'fabric';
 
-import type { Any } from 'src/type';
-
 type OptType = TOptions<FabricObjectProps> & {
   theta?: number;
   headlen?: number;

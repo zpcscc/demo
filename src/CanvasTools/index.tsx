@@ -1,8 +1,7 @@
 import { useLatest } from 'ahooks';
 import { Modal } from 'antd';
 import { Canvas, PencilBrush, type FabricObject } from 'fabric';
-import { useEffect, useRef, useState, type FC } from 'react';
-import type { AnyObject } from 'src/type';
+import { Fragment, useEffect, useRef, useState, type FC } from 'react';
 import ContextMenu from './ContextMenu';
 import type { MenuDataType } from './ContextMenu/type';
 import Panel from './Panel';
@@ -252,7 +251,7 @@ const CanvasTools: FC = () => {
   }, []);
 
   return (
-    <>
+    <Fragment>
       <Panel opt={opt} onOptChange={onOptChange} />
       <CanvasContainer id='container'>
         <canvas id='canvas-tools-container' ref={canvasEl} />
@@ -269,7 +268,7 @@ const CanvasTools: FC = () => {
       >
         <Panel type='local' opt={modalOpt} onOptChange={(_type, opt) => setModalOpt(opt)} />
       </Modal>
-    </>
+    </Fragment>
   );
 };
 
