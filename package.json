@@ -12,9 +12,8 @@
   "scripts": {
     "build": "dumi build",
     "commit": "git add . && git-cz",
-    "deploy": "pnpm run docs:build && gh-pages -d docs-dist",
+    "deploy": "pnpm run build && gh-pages -d docs-dist",
     "lint": "eslint --cache --ext .js,.jsx,.mjs,.ts,.tsx src",
-    "prepare": "husky install && dumi setup",
     "start": "dumi dev"
   },
   "dependencies": {
