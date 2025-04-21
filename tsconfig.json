@@ -1,5 +1,5 @@
 {
-  "extends": "@zpcscc/configs/tsconfig/tsconfig.react.json",
+  "extends": "@zpcscc/configs/tsconfig/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist",
@@ -20,7 +20,7 @@
     "docs/**/*",
     ".eslintrc.js",
     "commitlint.config.js",
-    "dist/**/*"
+    "unocss.config.ts"
   ],
   "exclude": ["node_modules"]
 }

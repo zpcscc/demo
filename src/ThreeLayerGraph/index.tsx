@@ -27,25 +27,25 @@ const ThreeLayerGraph: FC = () => {
   const materialOption = {
     color: 0x66ccff,
     linewidth: 5,
-    dashed: true
+    dashed: true,
   };
   // 实线材质
   const material = new LineMaterial({
     ...materialOption,
     linewidth: 3,
-    dashed: false
+    dashed: false,
   });
   // 虚线材质
   const materialDashed = new LineMaterial({
     ...materialOption,
-    dashed: true
+    dashed: true,
   });
   // 平面的一些配置
   const planeOption = {
     width: 200,
     height: 100,
     // 相邻两个平面的间隔大小
-    interval: 40
+    interval: 40,
   };
 
   // 创建页面内的子元素
@@ -113,19 +113,19 @@ const ThreeLayerGraph: FC = () => {
       const centerPoint = {
         x: (startPoint.x + endPoint.x) / 2,
         y: (startPoint.y + endPoint.y) / 2,
-        z: (startPoint.z + endPoint.z) / 2
+        z: (startPoint.z + endPoint.z) / 2,
       };
       // 获取空间中两点三分之一点
       const oneThird = {
         x: (2 * startPoint.x + endPoint.x) / 3,
         y: (2 * startPoint.y + endPoint.y) / 3,
-        z: (2 * startPoint.z + endPoint.z) / 3
+        z: (2 * startPoint.z + endPoint.z) / 3,
       };
       // 获取空间中两点三分之二点
       const twoThird = {
         x: (startPoint.x + 2 * endPoint.x) / 3,
         y: (startPoint.y + 2 * endPoint.y) / 3,
-        z: (startPoint.z + 2 * endPoint.z) / 3
+        z: (startPoint.z + 2 * endPoint.z) / 3,
       };
 
       // 计算x与y的偏移距离
@@ -145,7 +145,7 @@ const ThreeLayerGraph: FC = () => {
         // X轴的偏移方向
         x: centerPoint.x > 0 ? '+' : '-',
         // Y轴的偏移方向
-        y: centerPoint.y > 0 ? '+' : '-'
+        y: centerPoint.y > 0 ? '+' : '-',
       };
 
       const offsetDistance = getOffsetDistance();
@@ -154,12 +154,12 @@ const ThreeLayerGraph: FC = () => {
       controlPoint1 = {
         x: eval(`${oneThird.x} ${operator.x} ${offsetDistance.x}`),
         y: eval(`${oneThird.y} ${operator.y} ${offsetDistance.y}`),
-        z: oneThird.z
+        z: oneThird.z,
       };
       controlPoint2 = {
         x: eval(`${twoThird.x} ${operator.x} ${offsetDistance.x}`),
         y: eval(`${twoThird.y} ${operator.y} ${offsetDistance.y}`),
-        z: twoThird.z
+        z: twoThird.z,
       };
     }
     // 生成贝塞尔曲线
@@ -167,7 +167,7 @@ const ThreeLayerGraph: FC = () => {
       new THREE.Vector3(startPoint.x, startPoint.y, startPoint.z),
       new THREE.Vector3(controlPoint1.x, controlPoint1.y, controlPoint1.z),
       new THREE.Vector3(controlPoint2.x, controlPoint2.y, controlPoint2.z),
-      new THREE.Vector3(endPoint.x, endPoint.y, endPoint.z)
+      new THREE.Vector3(endPoint.x, endPoint.y, endPoint.z),
     );
     const points = curve.getPoints(200);
     // 使用CatmullRom算法将贝塞尔曲线的点连接成一条平滑的曲线
@@ -197,7 +197,7 @@ const ThreeLayerGraph: FC = () => {
     const direction = new THREE.Vector3(
       endPos.x - startPos.x,
       endPos.y - startPos.y,
-      endPos.z - startPos.z
+      endPos.z - startPos.z,
     ).normalize();
     const length = 1;
     const hex = 0x66ccff;
@@ -216,9 +216,9 @@ const ThreeLayerGraph: FC = () => {
       rotation: {
         x: -(70 * DEG2RAD),
         y: 0 * DEG2RAD,
-        z: 40 * DEG2RAD
+        z: 40 * DEG2RAD,
       },
-      background: new THREE.Color(0xf0f0f0)
+      background: new THREE.Color(0xf0f0f0),
     };
 
     // 初始化三层图谱的场景
@@ -247,7 +247,7 @@ const ThreeLayerGraph: FC = () => {
     renderer.domElement.style.top = '50%';
     renderer.domElement.style.left = '50%';
     renderer.domElement.style.transform = 'translate(-50%, -50%)';
-    document.querySelector('#container')?.append(renderer.domElement as Node);
+    document.querySelector('#three-container')?.append(renderer.domElement as Node);
     controls = new TrackballControls(camera, renderer.domElement);
 
     // 初始化连接线用到的渲染亲
@@ -262,7 +262,7 @@ const ThreeLayerGraph: FC = () => {
     webGLRenderer.domElement.style.transform = 'translate(-50%, -50%)';
     webGLRenderer.domElement.style.zIndex = 1;
     webGLRenderer.domElement.style.pointerEvents = 'none';
-    document.querySelector('#container')?.append(webGLRenderer.domElement);
+    document.querySelector('#three-container')?.append(webGLRenderer.domElement);
   };
 
   // 3d场景动画循环运行刷新
@@ -280,7 +280,7 @@ const ThreeLayerGraph: FC = () => {
           const node_point = {
             x: -width / 2 + offsetLeft + offsetWidth / 2,
             y: height / 2 - offsetTop - offsetHeight / 2,
-            z
+            z,
           };
           points_list.push(node_point);
         });
@@ -357,15 +357,7 @@ const ThreeLayerGraph: FC = () => {
   });
 
   return (
-    <div
-      id='container'
-      style={{
-        position: 'relative',
-        overflow: 'hidden',
-        height: '500px',
-        border: '1px solid #ccc'
-      }}
-    />
+    <div id='three-container' className='relative overflow-hidden h-500px b-1px b-solid b-#ccc' />
   );
 };
 
