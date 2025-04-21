@@ -212,7 +212,7 @@ export const aiMove = (params: {
         offsetY: selectedCell.y * cellSize + cellSize / 2,
       };
       handleCanvasClick(event);
-    }, 100);
+    }, 300);
   }
 };
 

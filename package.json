@@ -13,7 +13,6 @@
     "build": "dumi build",
     "commit": "git add . && git-cz",
     "deploy": "pnpm run build && gh-pages -d docs-dist",
-    "lint": "eslint --cache --ext .js,.jsx,.mjs,.ts,.tsx src",
     "start": "dumi dev"
   },
   "dependencies": {

@@ -12,6 +12,7 @@ const btnSuccess = 'bg-#27ae60 text-white hover:bg-#219653 hover:translate-y--2p
 
 const GoBang: FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const currentPlayerRef = useRef<number>(1); // 当前玩家 1: 黑棋, 2: 白棋
   const [currentPlayerText, setCurrentPlayerText] = useState<string>('黑方');
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [cellSize, setCellSize] = useState<number>(0);
@@ -29,8 +30,6 @@ const GoBang: FC = () => {
   ); // 消息类名
   const [gameStatusText, setGameStatusText] = useState<string>('准备开始'); // 游戏状态文本
   const [gameStatusClass, setGameStatusClass] = useState<string>('text-#f39c12'); // 游戏状态文本
-
-  let currentPlayer: number = 1; // 当前玩家 1: 黑棋, 2: 白棋
 
   // 更新游戏时间
   const updateGameTime = () => {
@@ -50,7 +49,7 @@ const GoBang: FC = () => {
         .fill(0)
         .map(() => Array(boardSize).fill(0)),
     );
-    currentPlayer = 1;
+    currentPlayerRef.current = 1;
     setGameActive(true);
     setMoveCount(0);
     setGameStartTime(Date.now());
@@ -73,12 +72,12 @@ const GoBang: FC = () => {
     }
 
     // 如果是人机对战且AI先手
-    if (gameMode === 'pve' && currentPlayer === 2) {
+    if (gameMode === 'pve' && currentPlayerRef.current === 2) {
       setTimeout(() => {
         aiMove({
           gameActive,
           aiDifficulty,
-          currentPlayer,
+          currentPlayer: currentPlayerRef.current,
           boardSize,
           board,
           cellSize,
@@ -127,7 +126,7 @@ const GoBang: FC = () => {
     if (x < 0 || x >= boardSize || y < 0 || y >= boardSize) return;
 
     // 检查禁手
-    if (checkForbidden(x, y, boardSize, board, gameRule, currentPlayer)) {
+    if (checkForbidden(x, y, boardSize, board, gameRule, currentPlayerRef.current)) {
       endGame('黑方禁手! 白方胜利!');
       setMessageClass(
         'p-1rem b-rd-6px mt-1rem text-center font-600 hidden bg-#e74c3c19 text-#e74c3c block',
@@ -144,15 +143,15 @@ const GoBang: FC = () => {
   const placePiece = (x: number, y: number) => {
     if (!gameActive || board[x][y] !== 0) return false;
 
-    board[x][y] = currentPlayer;
+    board[x][y] = currentPlayerRef.current;
     if (ctx) {
-      drawPiece(x, y, currentPlayer, ctx, cellSize);
+      drawPiece(x, y, currentPlayerRef.current, ctx, cellSize);
     }
     setMoveCount((prev) => prev + 1);
 
     // 检查胜负
     if (checkWin(x, y, boardSize, board)) {
-      endGame(currentPlayer === 1 ? '黑方胜利!' : '白方胜利!');
+      endGame(currentPlayerRef.current === 1 ? '黑方胜利!' : '白方胜利!');
       return true;
     }
 
@@ -163,16 +162,17 @@ const GoBang: FC = () => {
     }
 
     // 切换玩家
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
-    setCurrentPlayerText(currentPlayer === 1 ? '黑方' : '白方');
+    const newCurrentPlayer = currentPlayerRef.current === 1 ? 2 : 1;
+    currentPlayerRef.current = newCurrentPlayer;
+    setCurrentPlayerText(newCurrentPlayer === 1 ? '黑方' : '白方');
 
     // 如果是人机对战且游戏未结束，AI走棋
-    if (gameActive && gameMode === 'pve' && currentPlayer === 2) {
+    if (gameActive && gameMode === 'pve' && newCurrentPlayer === 2) {
       setTimeout(() => {
         aiMove({
           gameActive,
           aiDifficulty,
-          currentPlayer,
+          currentPlayer: newCurrentPlayer,
           boardSize,
           board,
           cellSize,
